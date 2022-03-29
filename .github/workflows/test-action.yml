@@ -1,0 +1,15 @@
+name: test-action
+on: [push]
+jobs:
+  check-bats-version:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+      - run: . ~/.nvm/nvm.sh
+      - run: nvm install node
+      - run: npm install -g bats
+      - run: bats -v
