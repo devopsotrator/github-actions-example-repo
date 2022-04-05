@@ -4,5 +4,5 @@ FROM node:12-alpine
 WORKDIR /app
 # COPY . .
 # RUN yarn install --production
-CMD ["echo", "HELLO WORLD"]
+CMD ["echo", "HELLO WORLD, AGAIN"]
 # EXPOSE 3000
