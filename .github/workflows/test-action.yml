@@ -5,11 +5,28 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v1
         with:
-          node-version: '14'
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '14'
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:latest
       # - run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
       # - run: . ~/.nvm/nvm.sh
       # - run: nvm install node
-      - run: npm install -g bats
-      - run: bats -v
+      # - run: npm install -g bats
+      # - run: bats -v
